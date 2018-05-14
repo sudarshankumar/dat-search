@@ -1,0 +1,48 @@
+environment: dev
+     
+# MongoDB config
+mongodb:
+   username: dat-fulfillment
+   password: '{cipher}AQBaXbpe44czGvZzAayzv4/12R1ordHLXC993rnOnN+aCFhPSPpT2kTaYdMbynYKXDMniPuUQ+p4vN1g+mOPb36kmjNzMiFjtO1E5Dz5KS4/VQoQYFKHKs+RxY/oWaUIi6hz/IXywX9rr6igr8x5fgeGNOAB9AqUNX0pM9yEyznG8ENQjDNoyQfciY3EhCeAqLQUD4B7lefcooPWxfY1UZ5xNf+S3LS+IAHW599XXuVjZXXjfo1/bwtTQ3fQGLaNgjUV3sRfOEqsTvQ0C2SWpC+ZyyjOlQoqAX15mkGLD3fpcjiV5fefBdGkLI+gyVIpL9Zy6Eg1DyjrzYF1VppgXP4rO90wPAzH6Lrxior+Z+jiVDRNvaUykzgyT5lKkhmidho='
+
+spring:
+  data:
+    mongodb:
+      repositories:
+        enabled:  true
+      uri: mongodb://${mongodb.username}:${mongodb.password}@mongo01.dev.ablocal.io:27017,mongo02.dev.ablocal.io:27018,mongo03.dev.ablocal.io:27019/FulfillmentDB?replicaSet=rs01-dev 
+                
+# MESSAGING               
+messaging:
+    listener:
+        enabled: true
+        sqs:
+            queue: dev-dat-search-request-queue
+    publisher:
+        enabled: true
+        queue: dev-dat-search-event-queue
+        type: sns
+        topic: dev-dat-search-event-topic
+    sqs:
+        region: us-west-2
+    sns:
+        region: us-west-2
+    accountId: 641500803079
+    
+  
+#Datadog metrics configuration
+datadog:
+  metrics:
+    export:
+      statsd:
+        host: datadog-agent.datadog
+        port: 8125
+        prefix: dat-search
+    
+httpConnPool:
+        maxTotal: 20
+        defaultMaxPerRoute: 20
+        connectionRequestTimeout: 2000
+        connectTimeout: 2000
+        socketTimeout: 2000
+    

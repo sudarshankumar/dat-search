@@ -1,0 +1,23 @@
+#MongoDB
+spring:
+  data:
+    mongodb:
+      repositories:
+        enabled:  true
+      uri: mongodb://mongo01.qa.ablocal.io:27017,mongo02.qa.ablocal.io:27018,mongo03.qa.ablocal.io:27019/SearchDB?replicaSet=rs01-qa
+
+# MESSAGING               
+messaging:
+    listener:
+        enabled: true
+        sqs:
+            queue: qa-dat-search-request-queue
+    publisher:
+        enabled: true
+        queue: qa-dat-search-event-queue
+        type: sns
+        topic: qa-dat-search-event-topic
+    sqs:
+        region: us-west-2
+    sns:
+        region: us-west-2

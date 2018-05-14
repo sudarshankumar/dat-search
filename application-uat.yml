@@ -1,0 +1,23 @@
+#MongoDB
+spring:
+  data:
+    mongodb:
+      repositories:
+        enabled:  true
+      uri: mongodb://mongo01.uat.ablocal.io:27017,mongo02.uat.ablocal.io:27018,mongo03.uat.ablocal.io:27019/SearchDB?replicaSet=rs01-uat
+
+# MESSAGING               
+messaging:
+    listener:
+        enabled: true
+        sqs:
+            queue: uat-dat-search-request-queue
+    publisher:
+        enabled: true
+        queue: uat-dat-search-event-queue
+        type: sns
+        topic: uat-dat-search-event-topic
+    sqs:
+        region: us-west-2
+    sns:
+        region: us-west-2
